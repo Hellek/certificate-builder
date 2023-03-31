@@ -1,0 +1,95 @@
+{
+  "name": "basic-ts-template",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "serve": "yarn && webpack serve --mode=development",
+    "upgrade-to-latest": "yarn upgrade-interactive --latest",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production",
+    "prepare": "husky install",
+    "lint": "yarn eslint --max-warnings 0 && yarn stylelint --max-warnings 0",
+    "stylelint": "stylelint \"**/*.css\"",
+    "stylelint:fix": "yarn stylelint --fix",
+    "eslint": "eslint --ext .tsx,.ts,.js .",
+    "eslint:fix": "yarn eslint --fix"
+  },
+  "lint-staged": {
+    "src/**/*.css": [
+      "yarn stylelint:fix --max-warnings 0"
+    ],
+    "src/**/*.{tsx,ts,js}": [
+      "yarn eslint:fix --max-warnings 0"
+    ]
+  },
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
+  "dependencies": {
+    "antd": "5.3.3",
+    "axios": "1.2.1",
+    "effector": "22.3.0",
+    "effector-react": "22.0.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.20.5",
+    "@babel/plugin-transform-runtime": "7.19.6",
+    "@babel/preset-env": "7.20.2",
+    "@babel/preset-react": "7.18.6",
+    "@babel/preset-typescript": "7.18.6",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
+    "@types/node": "16.11.36",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@typescript-eslint/eslint-plugin": "5.25.0",
+    "@typescript-eslint/parser": "5.25.0",
+    "autoprefixer": "10.4.14",
+    "babel-loader": "8.3.0",
+    "clsx": "1.2.1",
+    "copy-webpack-plugin": "11.0.0",
+    "css-loader": "6.7.3",
+    "css-minimizer-webpack-plugin": "4.0.0",
+    "dotenv": "16.0.3",
+    "eslint": "8.15.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-import-resolver-typescript": "2.7.1",
+    "eslint-plugin-effector": "0.7.4",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-react": "7.30.0",
+    "eslint-plugin-react-hooks": "4.5.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint-plugin-unused-imports": "2.0.0",
+    "eslint-webpack-plugin": "3.2.0",
+    "fork-ts-checker-webpack-plugin": "7.2.13",
+    "html-webpack-plugin": "5.5.0",
+    "husky": "8.0.3",
+    "lint-staged": "12.4.1",
+    "mini-css-extract-plugin": "2.7.2",
+    "postcss": "8.4.21",
+    "postcss-loader": "7.1.0",
+    "react-refresh": "0.14.0",
+    "style-loader": "3.3.2",
+    "stylelint": "14.8.3",
+    "stylelint-config-standard": "25.0.0",
+    "stylelint-webpack-plugin": "3.3.0",
+    "tailwindcss": "3.2.7",
+    "ts-node": "10.9.1",
+    "tsconfig-paths-webpack-plugin": "3.5.2",
+    "typescript": "4.6.4",
+    "webpack": "5.76.2",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.9.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not IE 11",
+    "not op_mini all"
+  ]
+}

@@ -1,0 +1,57 @@
+@tailwind base; /* Content of "@layer base" content and TailWwind stuff like "::backdrop" */
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: theme("textColor.gray.200");
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: theme("textColor.gray.400");
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: theme("textColor.gray.500");
+  }
+
+  html {
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    tab-size: 2;
+    font-family: theme("fontFamily.sans");
+  }
+
+  body {
+    @apply m-0 text-black;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+
+  #root {
+    @apply flex;
+  }
+
+  h1,
+  h2 {
+    @apply font-semibold;
+  }
+
+  a:hover {
+    @apply underline;
+  }
+}
+
+/* @layer components {} */
+
+/* @layer utilities {} */
