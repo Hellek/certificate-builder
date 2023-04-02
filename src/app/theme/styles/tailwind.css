@@ -33,13 +33,12 @@
   }
 
   html,
-  body,
-  #root {
+  body {
     @apply h-full;
   }
 
   #root {
-    @apply flex;
+    @apply min-h-full flex;
   }
 
   h1,

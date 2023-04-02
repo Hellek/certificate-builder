@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button } from 'antd'
+import {
+  Button, Checkbox, Divider,
+} from 'antd'
 import { incline } from 'lvovich'
-
-import { users } from './users'
 
 const inclineUserNameToDative = (userName: string) => {
   const [last, first] = userName.split(' ')
@@ -16,6 +16,8 @@ export const Composer = ({ imageBitmap }: {
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
+  const [applyDativeIncline, setApplyDativeIncline] = useState(true)
+  const [users] = useState<string[]>([])
 
   // Set CanvasRenderingContext2D
   useEffect(() => {
@@ -56,24 +58,39 @@ export const Composer = ({ imageBitmap }: {
   }
 
   const runIterativeDrawing = () => {
-    users
-      .map(inclineUserNameToDative)
-      .forEach(drawCert)
+    if (applyDativeIncline) {
+      users
+        .map(inclineUserNameToDative)
+        .forEach(drawCert)
+    } else {
+      users.forEach(drawCert)
+    }
   }
 
   return (
-    <div className="flex grow overflow-hidden">
-      <aside
+    <div className="flex flex-col overflow-hidden max-h-screen">
+      <header
         className="my-3 px-3 border-r dark:border-gray-600"
       >
         <Button
           ghost
           onClick={runIterativeDrawing}
-          shape="circle"
         >
-          🚀
+          Создать сертификаты
         </Button>
-      </aside>
+
+        <Divider type="vertical" className="bg-white mx-5" />
+
+        <Checkbox
+          checked={applyDativeIncline}
+          className="text-white"
+          onChange={e => {
+            setApplyDativeIncline(e.target.checked)
+          }}
+        >
+          Дательный падеж
+        </Checkbox>
+      </header>
 
       <div className="grow overflow-auto flex-center">
         <canvas
