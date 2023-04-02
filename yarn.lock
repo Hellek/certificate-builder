@@ -4508,6 +4508,11 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+lvovich@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/lvovich/-/lvovich-2.0.0.tgz#e633ff52bbba4fab193062c2ec50239ced790a5e"
+  integrity sha512-Nw5LQAgE7oTNqi6+7EV5c3hgWWct3sSI/Rdgho19D12QxN8OmJxOGV7CPTGfBgfpYgEokrBjoHo4qbDJl+rjUw==
+
 make-dir@^3.0.2, make-dir@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-3.1.0.tgz#415e967046b3a7f1d185277d84aa58203726a13f"
@@ -5358,7 +5363,7 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -5828,6 +5833,13 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-file-drop@3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/react-file-drop/-/react-file-drop-3.1.6.tgz#968abee56d03db6824af9a0038497330610e699f"
+  integrity sha512-G1IKKP5ql0FYlWl7X5+ZEDQfzeF5bT4meV6vg3wySs1+NvPOZgoNxTZxAqayENzW+zOf/WVQ81FPaK+yLuryuw==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-is@^16.12.0, react-is@^16.13.1:
   version "16.13.1"
