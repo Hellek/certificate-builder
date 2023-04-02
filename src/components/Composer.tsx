@@ -18,7 +18,8 @@ export const Composer = ({ imageBitmap }: {
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
-  const [applyDativeIncline, setApplyDativeIncline] = useState(true)
+  const [printWithDativeIncline, setPrintWithDativeIncline] = useState(true)
+  const [printWithUpperCase, setPrintWithUpperCase] = useState(true)
   const [usersDrawerOpen, setUsersDrawerOpen] = useState(true)
   const [users, setUsers] = useState<string[]>([])
 
@@ -41,6 +42,9 @@ export const Composer = ({ imageBitmap }: {
 
   const drawCert = (userName: string) => {
     if (canvasRef.current === null || ctx === null) return
+
+    const namePosY = 778
+
     // Draw image
     ctx.drawImage(imageBitmap, 0, 0)
 
@@ -48,26 +52,31 @@ export const Composer = ({ imageBitmap }: {
     ctx.font = '76px Roboto'
     ctx.fillStyle = '#545454'
     ctx.textAlign = 'center'
-    ctx.fillText(userName.toUpperCase(), imageBitmap.width / 2, 778)
+    ctx.fillText(userName, imageBitmap.width / 2, namePosY)
+  }
 
-    // Download result
-    const imgData = canvasRef.current.toDataURL('image/png')
+  const downloadCanvasImage = (userName: string) => {
+    if (canvasRef.current === null || ctx === null) return
+
     const link = document.createElement('a')
-    link.href = imgData
+    link.href = canvasRef.current.toDataURL('image/png')
     link.download = userName
     link.click()
     link.remove()
-    ctx.fillText('', imageBitmap.width / 2, 380)
+    ctx.drawImage(imageBitmap, 0, 0) // draw initial image without a name
+  }
+
+  const drawAndDownloadCert = (userName: string) => {
+    const name = printWithUpperCase ? userName.toUpperCase() : userName
+    drawCert(name)
+    downloadCanvasImage(name)
   }
 
   const runIterativeDrawing = () => {
-    if (applyDativeIncline) {
-      users
-        .map(inclineUserNameToDative)
-        .forEach(drawCert)
-    } else {
-      users.forEach(drawCert)
-    }
+    const inclinedUserNames = printWithDativeIncline ? users.map(inclineUserNameToDative) : users
+
+    inclinedUserNames
+      .forEach(drawAndDownloadCert)
   }
 
   return (
@@ -93,13 +102,23 @@ export const Composer = ({ imageBitmap }: {
         </Button>
 
         <Checkbox
-          checked={applyDativeIncline}
+          checked={printWithDativeIncline}
           className="ml-5"
           onChange={e => {
-            setApplyDativeIncline(e.target.checked)
+            setPrintWithDativeIncline(e.target.checked)
           }}
         >
           Дательный падеж
+        </Checkbox>
+
+        <Checkbox
+          checked={printWithUpperCase}
+          className="ml-5"
+          onChange={e => {
+            setPrintWithUpperCase(e.target.checked)
+          }}
+        >
+          В верхнем регистре
         </Checkbox>
       </header>
 
