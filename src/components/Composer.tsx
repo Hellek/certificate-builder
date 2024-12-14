@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  Button, Checkbox, Divider,
+  Button, Checkbox, ColorPicker, Divider,
+  InputNumber,
 } from 'antd'
 import { incline } from 'lvovich'
 
@@ -20,6 +21,8 @@ export const Composer = ({ imageBitmap }: {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [printWithDativeIncline, setPrintWithDativeIncline] = useState(true)
   const [printWithUpperCase, setPrintWithUpperCase] = useState(true)
+  const [printTextColor, setPrintTextColor] = useState('#1c3055')
+  const [printTextYPosition, setPrintTextYPosition] = useState(778)
   const [usersDrawerOpen, setUsersDrawerOpen] = useState(true)
   const [users, setUsers] = useState<string[]>([])
 
@@ -43,14 +46,14 @@ export const Composer = ({ imageBitmap }: {
   const drawCert = (userName: string) => {
     if (canvasRef.current === null || ctx === null) return
 
-    const namePosY = 778
+    const namePosY = printTextYPosition
 
     // Draw image
     ctx.drawImage(imageBitmap, 0, 0)
 
     // Draw text on image
     ctx.font = '76px Roboto'
-    ctx.fillStyle = '#545454'
+    ctx.fillStyle = printTextColor
     ctx.textAlign = 'center'
     ctx.fillText(userName, imageBitmap.width / 2, namePosY)
   }
@@ -82,7 +85,7 @@ export const Composer = ({ imageBitmap }: {
   return (
     <div className="flex flex-col overflow-hidden max-h-screen">
       <header
-        className="py-3 px-3 border-b-2 bg-white border-gray-600"
+        className="py-3 px-3 border-b-2 bg-white border-gray-600 flex items-center"
       >
         <Button
           type="primary"
@@ -120,6 +123,15 @@ export const Composer = ({ imageBitmap }: {
         >
           В верхнем регистре
         </Checkbox>
+
+        <ColorPicker defaultFormat="hex" defaultValue="1c3055" onChange={e => setPrintTextColor(e.toHex())} />
+
+        <InputNumber
+          value={printTextYPosition}
+          className="ml-5"
+          onChange={e => setPrintTextYPosition(Number(e))}
+        />
+        Позиция по вертикали
       </header>
 
       <div className="grow overflow-auto flex-center">
