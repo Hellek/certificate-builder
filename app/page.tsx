@@ -1,14 +1,15 @@
+'use client'
 import { useState } from 'react'
 
-import { AddFileDropzone } from '@components/AddFileDropzone'
-import { Composer } from '@components/Composer'
+import { AddFileDropzone } from '@/components/AddFileDropzone'
+import { Composer } from '@/components/Composer'
 
 enum Steps {
   ImageNotUploaded = 0,
   ImageBitmapCreated = 1,
 }
 
-export const HomePage = () => {
+export default function HomePage() {
   const [step, setStep] = useState<Steps>(0)
   const [imageBitmap, setImageBitmap] = useState<ImageBitmap | null>(null)
 

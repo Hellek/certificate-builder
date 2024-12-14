@@ -1,67 +1,19 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2022: true,
-  },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 2022,
-    sourceType: 'module',
-  },
   plugins: [
-    '@typescript-eslint',
-    'effector',
-    'react',
     'simple-import-sort',
     'unused-imports',
+    '@stylistic',
   ],
   extends: [
-    'airbnb',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:effector/recommended',
-    'plugin:effector/scope',
+    'next/core-web-vitals',
+    'next/typescript',
+  ],
+  ignorePatterns: [
+    '!.eslintrc.js',
+    '!.stylelintrc.js',
+    '!.lintstagedrc.js',
   ],
   rules: {
-    'max-len': ['warn', {
-      code: 120,
-      ignoreComments: true,
-      ignoreStrings: true,
-      ignoreTemplateLiterals: true,
-    }],
-    indent: 'warn',
-    'comma-dangle': 'warn',
-    'space-in-parens': 'warn',
-    'no-multi-spaces': 'warn',
-    'key-spacing': 'warn',
-    'comma-spacing': 'warn',
-    'array-bracket-spacing': 'warn',
-    'object-curly-newline': 'warn',
-    'object-curly-spacing': 'warn',
-    semi: [
-      'warn',
-      'never',
-    ],
-    'no-plusplus': [
-      'error',
-      { allowForLoopAfterthoughts: true },
-    ],
-    'arrow-parens': [
-      'warn',
-      'as-needed',
-    ],
-    'no-multiple-empty-lines': [
-      'warn',
-      {
-        max: 1,
-        maxBOF: 0,
-      },
-    ],
     'simple-import-sort/imports': [
       'warn',
       {
@@ -84,26 +36,69 @@ module.exports = {
         ],
       },
     ],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
+    // section of https://www.npmjs.com/package/eslint-plugin-unused-imports
+    'unused-imports/no-unused-imports': 'warn',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'unused-imports/no-unused-vars': [
+      'warn',
       {
-        ts: 'never',
-        tsx: 'never',
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
       },
     ],
-    'import/no-extraneous-dependencies': 'off',
-    'import/prefer-default-export': 'off',
-    'lines-between-class-members': [
+    // section of https://www.npmjs.com/package/eslint-plugin-unused-imports
+    'no-plusplus': [
       'warn',
-      'always',
-      { exceptAfterSingleLine: true },
+      { allowForLoopAfterthoughts: true },
     ],
-    'no-useless-constructor': 'off',
-    'no-shadow': 'off',
-    'function-call-argument-newline': ['error', 'consistent'],
-    'function-paren-newline': ['error', 'multiline-arguments'],
-    'padding-line-between-statements': [
+    '@stylistic/quotes': ['warn', 'single'],
+    '@stylistic/quote-props': ['warn', 'as-needed'],
+    '@stylistic/jsx-quotes': ['warn', 'prefer-double'],
+    '@stylistic/indent-binary-ops': ['warn', 2],
+    '@stylistic/indent': ['warn', 2, {
+      SwitchCase: 1,
+      MemberExpression: 1,
+    }],
+    '@stylistic/max-len': ['warn', {
+      code: 120,
+      ignoreComments: true,
+      ignoreStrings: true,
+      ignoreTemplateLiterals: true,
+    }],
+    '@stylistic/comma-dangle': ['warn', 'always-multiline'],
+    '@stylistic/no-multi-spaces': 'warn',
+    '@stylistic/key-spacing': ['warn', {
+      beforeColon: false,
+      afterColon: true,
+    }],
+    '@stylistic/comma-spacing': 'warn',
+    '@stylistic/array-bracket-spacing': 'warn',
+    '@stylistic/object-curly-spacing': ['warn', 'always'],
+    '@stylistic/space-before-blocks': 'warn',
+    '@stylistic/padded-blocks': ['warn', 'never'],
+    '@stylistic/object-curly-newline': ['warn', {
+      multiline: true,
+      consistent: true,
+    }],
+    '@stylistic/semi': [
+      'warn',
+      'never',
+    ],
+    '@stylistic/arrow-parens': [
+      'warn',
+      'as-needed',
+    ],
+    '@stylistic/no-multiple-empty-lines': [
+      'warn',
+      {
+        max: 1,
+        maxBOF: 0,
+      },
+    ],
+    '@stylistic/no-trailing-spaces': 'warn',
+    '@stylistic/padding-line-between-statements': [
       'warn',
       { blankLine: 'always', prev: 'multiline-block-like', next: '*' },
       { blankLine: 'any', prev: '*', next: ['if', 'for', 'return'] },
@@ -127,92 +122,18 @@ module.exports = {
       },
       { blankLine: 'always', prev: 'multiline-const', next: '*' },
     ],
-    'class-methods-use-this': 'off',
-    'no-underscore-dangle': [
-      'error',
+    '@stylistic/function-call-argument-newline': ['warn', 'consistent'],
+    '@stylistic/function-paren-newline': ['error', 'multiline-arguments'],
+    '@stylistic/lines-between-class-members': [
+      'warn',
       {
-        allowAfterThis: true,
-        allow: [
-          '_id',
+        enforce: [
+          { blankLine: 'always', prev: 'method', next: 'field' },
+          { blankLine: 'always', prev: 'field', next: 'method' },
+          { blankLine: 'always', prev: 'method', next: 'method' },
+          { blankLine: 'never', prev: 'field', next: 'field' },
         ],
       },
     ],
-    camelcase: 'off',
-    'no-trailing-spaces': 'warn',
-    'no-param-reassign': ['error', { props: false }],
-
-    '@typescript-eslint/type-annotation-spacing': [
-      'warn',
-      {
-        after: true,
-      },
-    ],
-    '@typescript-eslint/member-delimiter-style': [
-      'warn',
-      {
-        multiline: {
-          delimiter: 'none',
-        },
-        singleline: {
-          delimiter: 'comma',
-        },
-      },
-    ],
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-useless-constructor': ['error'],
-    '@typescript-eslint/no-shadow': ['error'],
-    'react/function-component-definition': [
-      'warn',
-      { namedComponents: 'arrow-function' },
-    ],
-    'react/jsx-filename-extension': [
-      'warn',
-      {
-        extensions: ['.tsx'],
-      },
-    ],
-    'react/jsx-one-expression-per-line': 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'react/prop-types': 'off',
-    // unnecessary rules https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/require-default-props': 'off',
-    'react/no-unstable-nested-components': ['warn', {
-      allowAsProps: true,
-    }],
-    'react/jsx-curly-spacing': 'warn',
-    'jsx-quotes': 'warn',
-    'jsx-a11y/click-events-have-key-events': 'off',
-    'jsx-a11y/interactive-supports-focus': 'off',
-    'jsx-a11y/label-has-associated-control': ['error', {
-      required: {
-        some: ['nesting', 'id'],
-      },
-    }],
-    'no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'warn',
-    'unused-imports/no-unused-vars': [
-      'warn',
-      {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
-      },
-    ],
-  },
-  overrides: [
-    {
-      files: ['*.js', '*.jsx'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 'off',
-      },
-    },
-  ],
-  settings: {
-    'import/resolver': {
-      typescript: {},
-    },
   },
 }

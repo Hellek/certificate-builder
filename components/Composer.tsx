@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import {
-  Button, Checkbox, ColorPicker, Divider,
-  InputNumber,
-} from 'antd'
+import { Button, Checkbox, FloatingLabel, Label } from 'flowbite-react'
+// import {
+//   Button, Checkbox, ColorPicker, Divider,
+//   InputNumber,
+// } from 'antd'
 import { incline } from 'lvovich'
 
 import { UsersDrawer } from './UsersDrawer'
@@ -21,8 +22,9 @@ export const Composer = ({ imageBitmap }: {
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
   const [printWithDativeIncline, setPrintWithDativeIncline] = useState(true)
   const [printWithUpperCase, setPrintWithUpperCase] = useState(true)
-  const [printTextColor, setPrintTextColor] = useState('#1c3055')
-  const [printTextYPosition, setPrintTextYPosition] = useState(778)
+  const [printTextColor] = useState('#1c3055')
+  const [printTextYPosition, setPrintTextYPosition] = useState(690)
+  const [printTextSize, setPrintTextSize] = useState(92)
   const [usersDrawerOpen, setUsersDrawerOpen] = useState(true)
   const [users, setUsers] = useState<string[]>([])
 
@@ -52,7 +54,7 @@ export const Composer = ({ imageBitmap }: {
     ctx.drawImage(imageBitmap, 0, 0)
 
     // Draw text on image
-    ctx.font = '76px Roboto'
+    ctx.font = printTextSize + 'px Roboto'
     ctx.fillStyle = printTextColor
     ctx.textAlign = 'center'
     ctx.fillText(userName, imageBitmap.width / 2, namePosY)
@@ -85,53 +87,68 @@ export const Composer = ({ imageBitmap }: {
   return (
     <div className="flex flex-col overflow-hidden max-h-screen">
       <header
-        className="py-3 px-3 border-b-2 bg-white border-gray-600 flex items-center"
+        className="py-3 px-3 border-b-2 bg-white border-gray-600 flex items-center gap-2"
       >
         <Button
-          type="primary"
+          color="blue"
+          size="xs"
+          className="max-w-40"
           onClick={() => setUsersDrawerOpen(true)}
         >
           {users.length ? 'Редактировать' : 'Добавить'} имена
         </Button>
 
-        <Divider type="vertical" className="bg-black mx-5" />
-
         <Button
-          type="primary"
+          color="blue"
+          size="xs"
+          className="max-w-40"
           disabled={!users.length}
           onClick={runIterativeDrawing}
         >
           Создать сертификаты
         </Button>
 
-        <Checkbox
-          checked={printWithDativeIncline}
-          className="ml-5"
-          onChange={e => {
-            setPrintWithDativeIncline(e.target.checked)
-          }}
-        >
-          Дательный падеж
-        </Checkbox>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="incline-checkbox"
+            checked={printWithDativeIncline}
+            onChange={e => {
+              setPrintWithDativeIncline(e.target.checked)
+            }}
+          />
+          <Label htmlFor="incline-checkbox ">Дательный падеж</Label>
+        </div>
 
-        <Checkbox
-          checked={printWithUpperCase}
-          className="ml-5"
-          onChange={e => {
-            setPrintWithUpperCase(e.target.checked)
-          }}
-        >
-          В верхнем регистре
-        </Checkbox>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="casing-checkbox"
+            checked={printWithUpperCase}
+            onChange={e => {
+              setPrintWithUpperCase(e.target.checked)
+            }}
+          />
+          <Label htmlFor="casing-checkbox">В верхнем регистре</Label>
+        </div>
 
-        <ColorPicker defaultFormat="hex" defaultValue="1c3055" onChange={e => setPrintTextColor(e.toHex())} />
-
-        <InputNumber
+        <FloatingLabel
+          label="Позиция по вертикали"
+          variant="outlined"
+          sizing="md"
+          type="number"
           value={printTextYPosition}
-          className="ml-5"
-          onChange={e => setPrintTextYPosition(Number(e))}
+          onChange={e => setPrintTextYPosition(Number(e.target.value))}
         />
-        Позиция по вертикали
+
+        <FloatingLabel
+          label="Размер шрифта"
+          variant="outlined"
+          sizing="md"
+          type="number"
+          value={printTextSize}
+          onChange={e => setPrintTextSize(Number(e.target.value))}
+        />
+
+        {/* <ColorPicker defaultFormat="hex" defaultValue="1c3055" onChange={e => setPrintTextCole.toHex())} /> */}
       </header>
 
       <div className="grow overflow-auto flex-center">
