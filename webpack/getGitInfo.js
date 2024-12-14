@@ -32,7 +32,7 @@ const getGitInfo = () => {
     APP_VERSION = `${branch}-${releaseTag}.${commitsAfterTag || 0}`
   } catch (error) {
     if (error.message.indexOf('cannot describe anything') === -1) throw error
-    const errorMessage = `Ersai custom webpack feature "getGitInfo" catch "${error.message}"`.replaceAll('\n', ' ')
+    const errorMessage = `Custom webpack feature "getGitInfo" catch "${error.message}"`.replaceAll('\n', ' ')
     // eslint-disable-next-line no-console
     console.log('\x1b[44m%s\x1b[0m', errorMessage)
   }

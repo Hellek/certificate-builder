@@ -42,7 +42,7 @@ export const AddFileDropzone = ({
         className="file-drop grow cursor-pointer hover:border-4 hover:text-blue-500 border-blue-500 border-dashed"
       >
         <div className="file-drop-inner-wrapper text-center">
-          <h2>Кликни или перемести сюда<br />макет сертификата</h2>
+          <h2>Кликни или перемести сюда<br />изображение основу</h2>
         </div>
       </FileDrop>
 
