@@ -175,7 +175,7 @@ export const Composer = ({ imageBitmap }: {
           label="Позиция по горизонтали"
           variant="outlined"
           sizing="md"
-          className="w-[200]"
+          className="w-[200px]"
           type="number"
           value={printTextXPosition}
           onChange={e => setPrintTextXPosition(Number(e.target.value))}
@@ -185,7 +185,7 @@ export const Composer = ({ imageBitmap }: {
           label="Позиция по вертикали"
           variant="outlined"
           sizing="md"
-          className="w-[200]"
+          className="w-[200px]"
           type="number"
           value={printTextYPosition}
           onChange={e => setPrintTextYPosition(Number(e.target.value))}
