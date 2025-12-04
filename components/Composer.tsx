@@ -23,6 +23,7 @@ export const Composer = ({ imageBitmap }: {
   const [printWithDativeIncline, setPrintWithDativeIncline] = useState(true)
   const [printWithUpperCase, setPrintWithUpperCase] = useState(true)
   const [printTextColor] = useState('#1c3055')
+  const [printTextXPosition, setPrintTextXPosition] = useState(imageBitmap.width / 2)
   const [printTextYPosition, setPrintTextYPosition] = useState(690)
   const [printTextSize, setPrintTextSize] = useState(92)
   const [usersDrawerOpen, setUsersDrawerOpen] = useState(true)
@@ -45,9 +46,40 @@ export const Composer = ({ imageBitmap }: {
     ctx.drawImage(imageBitmap, 0, 0)
   }, [ctx, imageBitmap])
 
+  // Preview text on canvas
+  useEffect(() => {
+    if (ctx === null) return
+
+    // Draw image first
+    ctx.drawImage(imageBitmap, 0, 0)
+
+    // Draw preview text if there's a user name to preview
+    const previewName = users.length > 0 ? users[0] : ''
+    if (previewName) {
+      let name = printWithDativeIncline ? inclineUserNameToDative(previewName) : previewName
+      name = printWithUpperCase ? name.toUpperCase() : name
+
+      ctx.font = printTextSize + 'px Roboto'
+      ctx.fillStyle = printTextColor
+      ctx.textAlign = 'center'
+      ctx.fillText(name, printTextXPosition, printTextYPosition)
+    }
+  }, [
+    ctx,
+    imageBitmap,
+    users,
+    printTextXPosition,
+    printTextYPosition,
+    printTextSize,
+    printTextColor,
+    printWithUpperCase,
+    printWithDativeIncline,
+  ])
+
   const drawCert = (userName: string) => {
     if (canvasRef.current === null || ctx === null) return
 
+    const namePosX = printTextXPosition
     const namePosY = printTextYPosition
 
     // Draw image
@@ -57,7 +89,7 @@ export const Composer = ({ imageBitmap }: {
     ctx.font = printTextSize + 'px Roboto'
     ctx.fillStyle = printTextColor
     ctx.textAlign = 'center'
-    ctx.fillText(userName, imageBitmap.width / 2, namePosY)
+    ctx.fillText(userName, namePosX, namePosY)
   }
 
   const downloadCanvasImage = (userName: string) => {
@@ -68,20 +100,29 @@ export const Composer = ({ imageBitmap }: {
     link.download = userName
     link.click()
     link.remove()
-    ctx.drawImage(imageBitmap, 0, 0) // draw initial image without a name
+
+    // Restore preview after download
+    ctx.drawImage(imageBitmap, 0, 0)
+    const previewName = users.length > 0 ? users[0] : ''
+    if (previewName) {
+      let name = printWithDativeIncline ? inclineUserNameToDative(previewName) : previewName
+      name = printWithUpperCase ? name.toUpperCase() : name
+      ctx.font = printTextSize + 'px Roboto'
+      ctx.fillStyle = printTextColor
+      ctx.textAlign = 'center'
+      ctx.fillText(name, printTextXPosition, printTextYPosition)
+    }
   }
 
   const drawAndDownloadCert = (userName: string) => {
-    const name = printWithUpperCase ? userName.toUpperCase() : userName
+    let name = printWithDativeIncline ? inclineUserNameToDative(userName) : userName
+    name = printWithUpperCase ? name.toUpperCase() : name
     drawCert(name)
     downloadCanvasImage(name)
   }
 
   const runIterativeDrawing = () => {
-    const inclinedUserNames = printWithDativeIncline ? users.map(inclineUserNameToDative) : users
-
-    inclinedUserNames
-      .forEach(drawAndDownloadCert)
+    users.forEach(drawAndDownloadCert)
   }
 
   return (
@@ -131,9 +172,20 @@ export const Composer = ({ imageBitmap }: {
         </div>
 
         <FloatingLabel
+          label="Позиция по горизонтали"
+          variant="outlined"
+          sizing="md"
+          className="w-[200]"
+          type="number"
+          value={printTextXPosition}
+          onChange={e => setPrintTextXPosition(Number(e.target.value))}
+        />
+
+        <FloatingLabel
           label="Позиция по вертикали"
           variant="outlined"
           sizing="md"
+          className="w-[200]"
           type="number"
           value={printTextYPosition}
           onChange={e => setPrintTextYPosition(Number(e.target.value))}

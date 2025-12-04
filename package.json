@@ -10,7 +10,7 @@
     "url": "https://github.com/Hellek/certificate-builder"
   },
   "engines": {
-    "node": "18",
+    "node": "22",
     "npm": "9 || 10"
   },
   "scripts": {
