@@ -20,7 +20,7 @@
     "lintstyle": "stylelint --allow-empty-input \"(app|components)/**/*.css\"",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "prepare": "husky install"
+    "prepare": "git config core.hooksPath .git-hooks || echo 'Not in a git repo'"
   },
   "dependencies": {
     "flowbite-react": "^0.10.2",
@@ -40,7 +40,6 @@
     "eslint-config-next": "15.0.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "postcss": "^8",
     "postcss-calc": "10.0.2",
